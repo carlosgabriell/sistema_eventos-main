@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21.0.7"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="DashboardController"
+      spacing="10" prefWidth="600" prefHeight="400">
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Painel do Organizador" style="-fx-font-size: 20px;" />
+
+    <TableView fx:id="eventTable" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Nome" prefWidth="200" />
+            <TableColumn fx:id="dateColumn" text="Data" prefWidth="150" />
+            <TableColumn fx:id="timeColumn" text="Horário" prefWidth="150" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Adicionar Evento" onAction="#addEvent" prefWidth="150" />
+        <Button text="Ver Descrição" onAction="#showEventDescription" prefWidth="150" />
+        <Button text="Sair" onAction="#logout" prefWidth="100" />
+    </HBox>
+</VBox>

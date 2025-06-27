@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21.0.7"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="RegisterController"
+      alignment="CENTER" spacing="10" prefWidth="350" prefHeight="300">
+
+    <Label text="Cadastro" style="-fx-font-size: 20px;" />
+
+    <TextField fx:id="nameField" promptText="Nome" />
+    <TextField fx:id="emailField" promptText="Email" />
+    <PasswordField fx:id="passwordField" promptText="Senha" />
+
+    <ChoiceBox fx:id="roleChoiceBox" prefWidth="150" />
+
+    <Button text="Registrar" onAction="#handleRegister" prefWidth="120" />
+
+    <Hyperlink text="Já tem conta? Login" onAction="#goToLogin" />
+
+</VBox>

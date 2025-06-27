@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21.0.7"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ParticipantController"
+      spacing="10" prefWidth="600" prefHeight="400">
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Painel do Participante" style="-fx-font-size: 20px;" />
+    
+    <TableView fx:id="eventTable" prefHeight="320">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Nome" prefWidth="200" />
+            <TableColumn fx:id="dateColumn" text="Data" prefWidth="150" />
+            <TableColumn fx:id="timeColumn" text="Horário" prefWidth="150" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Ver Descrição" onAction="#showEventDescription" />
+        <Button text="Sair" onAction="#logout" />
+    </HBox>
+
+</VBox>
