@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="EventDetailsAdminController"
+      spacing="10" alignment="CENTER" prefWidth="1100" prefHeight="650">
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label fx:id="eventNameLabel" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
+
+    <ImageView fx:id="eventBanner" fitWidth="1080" fitHeight="520" preserveRatio="false" />
+
+    <Label fx:id="eventDateTimeLabel" />
+    <Label fx:id="eventLocalLabel" />
+    <Label fx:id="eventCategoryLabel" />
+
+    <TextArea fx:id="eventDescriptionArea"
+              editable="false"
+              wrapText="true"
+              prefRowCount="6"
+              prefWidth="1080"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Voltar" onAction="#handleBack" />
+        <Button text="Editar Evento" onAction="#handleEditEvent" />
+        <Button text="Apagar Evento" onAction="#handleDeleteEvent" />
+        <Button text="Ver Pessoas Interessadas" onAction="#handleShowInterestedUsers" />
+    </HBox>
+
+</VBox>

@@ -1,31 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx/21.0.7"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="ParticipantController"
-      spacing="10" prefWidth="600" prefHeight="400">
+      spacing="10" alignment="TOP_CENTER" prefWidth="600" prefHeight="700">
 
     <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
+        <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Painel do Participante" style="-fx-font-size: 20px;" />
-    
-    <TableView fx:id="eventTable" prefHeight="320">
-        <columns>
-            <TableColumn fx:id="nameColumn" text="Nome" prefWidth="200" />
-            <TableColumn fx:id="dateColumn" text="Data" prefWidth="150" />
-            <TableColumn fx:id="timeColumn" text="Horário" prefWidth="150" />
-        </columns>
-    </TableView>
-
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="Ver Descrição" onAction="#showEventDescription" />
-        <Button text="Sair" onAction="#logout" />
+    <!-- Menu superior com nome do usuário e dropdown -->
+    <HBox spacing="10" alignment="CENTER_RIGHT" prefWidth="580">
+        <Label text="Olá," style="-fx-font-size: 14px;"/>
+        <Label fx:id="userNameLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <MenuButton text="Menu" style="-fx-font-size: 14px;">
+            <items>
+                <MenuItem text="Sair" onAction="#handleLogout"/>
+            </items>
+        </MenuButton>
     </HBox>
+
+    <!-- Filtro ComboBox -->
+    <HBox alignment="CENTER_LEFT" spacing="10" prefWidth="580">
+        <Label text="Filtrar eventos:" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+        <ComboBox fx:id="filterComboBox" onAction="#onFilterChanged" prefWidth="200" promptText="Selecione filtro"/>
+    </HBox>
+
+    <Label text="Eventos Disponíveis" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <!-- Container para os cards -->
+    <VBox fx:id="eventContainer" spacing="10" prefWidth="580" />
 
 </VBox>

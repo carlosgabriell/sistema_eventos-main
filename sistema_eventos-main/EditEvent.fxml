@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="EditEventController"
+      spacing="10" alignment="CENTER" prefWidth="600" prefHeight="700">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Editar Evento" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="nameField" promptText="Nome do evento"/>
+    <DatePicker fx:id="datePicker" promptText="Data do evento"/>
+    <TextField fx:id="timeField" promptText="Horário (ex: 20:00)"/>
+    <TextField fx:id="localField" promptText="Local do evento"/>
+    <TextArea fx:id="descriptionArea" promptText="Descrição do evento" prefRowCount="4" prefWidth="500"/>
+
+    <ComboBox fx:id="categoryField" promptText="Categoria do evento" prefWidth="300"/>
+
+    <Button fx:id="selectBannerButton" text="Selecionar Banner"/>
+    <Label fx:id="bannerPathLabel" text="Nenhum banner selecionado"/>
+    <ImageView fx:id="bannerPreview" fitWidth="500" fitHeight="250" preserveRatio="true"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Salvar" onAction="#handleSave"/>
+        <Button text="Cancelar" onAction="#handleCancel"/>
+    </HBox>
+</VBox>

@@ -1,21 +1,40 @@
 public class Event1 {
+    private int id;
     private String name;
     private String date;
     private String time;
     private String description;
-    private String local;  // novo atributo
+    private String local;
+    private String bannerPath;
+    private String category;
 
-    public Event1(String name, String date, String time, String description, String local) {
+    public Event1(int id, String name, String date, String time, String description, String local, String bannerPath, String category) {
+        this.id = id;
         this.name = name;
         this.date = date;
         this.time = time;
         this.description = description;
-        this.local = local;  // atribuição do novo atributo
+        this.local = local;
+        this.bannerPath = bannerPath;
+        this.category = category;
     }
 
+    // Construtor auxiliar caso categoria não seja informada (para compatibilidade)
+    public Event1(int id, String name, String date, String time, String description, String local, String bannerPath) {
+        this(id, name, date, time, description, local, bannerPath, "");
+    }
+
+    // Getters
+    public int getId() { return id; }
     public String getName() { return name; }
     public String getDate() { return date; }
     public String getTime() { return time; }
     public String getDescription() { return description; }
-    public String getLocal() { return local; }  // getter para local
+    public String getLocal() { return local; }
+    public String getBannerPath() { return bannerPath; }
+    public String getCategory() { return category; }
+
+    // Setters (se necessário)
+    public void setBannerPath(String bannerPath) { this.bannerPath = bannerPath; }
+    public void setCategory(String category) { this.category = category; }
 }

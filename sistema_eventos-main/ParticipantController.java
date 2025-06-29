@@ -1,94 +1,135 @@
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.Alert.AlertType;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.Priority;
 import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
 import java.sql.*;
 
 public class ParticipantController {
 
-    @FXML private TableView<Event1> eventTable;
-    @FXML private TableColumn<Event1, String> nameColumn;
-    @FXML private TableColumn<Event1, String> dateColumn;
-    @FXML private TableColumn<Event1, String> timeColumn;
+    @FXML
+    private VBox eventContainer;
 
-    private ObservableList<Event1> eventList = FXCollections.observableArrayList();
+    @FXML
+    private Label userNameLabel;
+
+    @FXML
+    private ComboBox<String> filterComboBox;
 
     @FXML
     public void initialize() {
-        // Configurar as colunas para usar as propriedades de Event1
-        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDate()));
-        timeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTime()));
+        String nomeUsuario = Session.getInstance().getNome();
+        userNameLabel.setText(nomeUsuario != null ? nomeUsuario : "Usuário");
 
-        loadEventsFromDatabase();
+        filterComboBox.getItems().addAll("Todos", "Meus Interesses");
+        filterComboBox.getSelectionModel().selectFirst();
+
+        loadEvents("Todos");
     }
 
-    private void loadEventsFromDatabase() {
-        eventList.clear();
-        try (Connection conn = Database.connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT name, date, time, description, local FROM events")) {
+    @FXML
+    private void onFilterChanged() {
+        String filtroSelecionado = filterComboBox.getSelectionModel().getSelectedItem();
+        loadEvents(filtroSelecionado);
+    }
 
-            while (rs.next()) {
-                Event1 event = new Event1(
-                        rs.getString("name"),
-                        rs.getString("date"),
-                        rs.getString("time"),
-                        rs.getString("description"),
-                        rs.getString("local")
-                );
-                eventList.add(event);
+    private void loadEvents(String filtro) {
+        eventContainer.getChildren().clear();
+
+        try (Connection conn = Database.connect()) {
+            PreparedStatement stmt;
+
+            if ("Meus Interesses".equals(filtro)) {
+                String sql = "SELECT e.id, e.name, e.date, e.time, e.description, e.local, e.banner_path, e.category " +
+                             "FROM events e " +
+                             "JOIN interesses i ON e.id = i.event_id " +
+                             "WHERE i.user_id = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, Session.getInstance().getUserId());
+            } else {
+                String sql = "SELECT id, name, date, time, description, local, banner_path, category FROM events";
+                stmt = conn.prepareStatement(sql);
             }
 
-            eventTable.setItems(eventList);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String date = rs.getString("date");
+                String time = rs.getString("time");
+                String description = rs.getString("description");
+                String local = rs.getString("local");
+                String bannerPath = rs.getString("banner_path");
+                String category = rs.getString("category");
+
+                Event1 event = new Event1(id, name, date, time, description, local, bannerPath, category);
+
+                HBox card = createEventCard(event);
+                eventContainer.getChildren().add(card);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert(AlertType.ERROR, "Erro", "Não foi possível carregar os eventos.");
         }
     }
 
-    @FXML
-    private void showEventDescription() {
-        Event1 selectedEvent = eventTable.getSelectionModel().getSelectedItem();
-        if (selectedEvent == null) {
-            showAlert(AlertType.WARNING, "Aviso", "Selecione um evento para ver a descrição.");
-            return;
-        }
+    private HBox createEventCard(Event1 event) {
+        HBox box = new HBox(10);
+        box.setStyle("-fx-border-color: #ccc; -fx-padding: 10; -fx-background-color: #f9f9f9;");
+        box.setPrefHeight(80);
 
-        String description = selectedEvent.getDescription();
-        String local = selectedEvent.getLocal();
+        Label name = new Label(event.getName());
+        name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
-        String message = "Descrição: " + (description != null ? description : "Sem descrição") +
-                         "\nLocal: " + (local != null ? local : "Não informado");
+        Label dateTime = new Label(event.getDate() + " - " + event.getTime());
 
-        showAlert(AlertType.INFORMATION, selectedEvent.getName(), message);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        Button detailsButton = new Button("Ver Detalhes");
+        detailsButton.setOnAction(e -> openEventDetails(event));
+
+        VBox textBox = new VBox(name, dateTime);
+
+        box.getChildren().addAll(textBox, spacer, detailsButton);
+
+        return box;
     }
 
-    @FXML
-    private void logout() {
+    private void openEventDetails(Event1 event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-            Stage stage = (Stage) eventTable.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EventDetails.fxml"));
+            Parent root = loader.load();
+
+            EventDetailsController controller = loader.getController();
+            controller.setEvent(event);
+
+            Stage stage = (Stage) eventContainer.getScene().getWindow();
+            stage.setScene(new Scene(root));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleLogout() {
+        Session.getInstance().clear();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+            Stage stage = (Stage) eventContainer.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(AlertType.ERROR, "Erro", "Não foi possível fazer logout.");
         }
-    }
-
-    private void showAlert(AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

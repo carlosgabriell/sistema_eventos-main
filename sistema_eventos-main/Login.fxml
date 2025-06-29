@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21.0.7"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="LoginController"
-      alignment="CENTER" spacing="10" prefWidth="300" prefHeight="250">
+<StackPane xmlns="http://javafx.com/javafx/21.0.7"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="LoginController"
+           prefWidth="400" prefHeight="300">
 
-    <Label text="Login" style="-fx-font-size: 20px;"/>
-    
-    <TextField fx:id="emailField" promptText="Email" />
-    <PasswordField fx:id="passwordField" promptText="Senha" />
-    
-    <Button text="Entrar" onAction="#handleLogin" prefWidth="100" />
-    
-    <Hyperlink text="Registrar-se" onAction="#goToRegister" />
+    <VBox alignment="CENTER" spacing="15" maxWidth="300">
+        <padding>
+            <Insets top="30" right="20" bottom="30" left="20"/>
+        </padding>
 
-</VBox>
+        <Label text="Login"
+               style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+        <TextField fx:id="emailField"
+                   promptText="Email"
+                   prefWidth="280" />
+
+        <PasswordField fx:id="passwordField"
+                       promptText="Senha"
+                       prefWidth="280" />
+
+        <Button text="Entrar"
+                onAction="#handleLogin"
+                prefWidth="120"
+                style="-fx-font-size: 14px;" />
+
+        <Hyperlink text="Registrar-se"
+                   onAction="#goToRegister"
+                   style="-fx-font-size: 12px;" />
+    </VBox>
+
+</StackPane>

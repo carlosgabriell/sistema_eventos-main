@@ -1,21 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx/27.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="CreateEventController"
-      alignment="CENTER" spacing="10" prefWidth="400" prefHeight="400">
+      alignment="CENTER"
+      spacing="10"
+      prefWidth="400"
+      prefHeight="550">
 
-    <Label text="Criar Evento" style="-fx-font-size: 20px;" />
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Criar Evento" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
     <TextField fx:id="nameField" promptText="Nome do evento" />
-    <DatePicker fx:id="datePicker" />
+
+    <DatePicker fx:id="datePicker" promptText="Data do evento" />
+
     <TextField fx:id="timeField" promptText="Horário (ex: 20:00)" />
+
     <TextField fx:id="localField" promptText="Local do evento" />
+
+    <ComboBox fx:id="categoryComboBox" promptText="Selecione a categoria" prefWidth="200" />
+
     <TextArea fx:id="descriptionArea" promptText="Descrição do evento" prefRowCount="4" />
 
-    <Button text="Salvar Evento" onAction="#handleSaveEvent" prefWidth="150" />
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="selectBannerButton" text="Selecionar Banner" onAction="#handleSelectBanner" />
+        <Label text="(Use banner 1080x520 px)" style="-fx-font-size: 11px; -fx-text-fill: #666;" />
+    </HBox>
+
+    <ImageView fx:id="bannerPreview"
+               fitWidth="300"
+               fitHeight="150"
+               preserveRatio="true"
+               style="-fx-border-color: #ccc; -fx-border-width: 1px;" />
+
+    <Label fx:id="bannerPathLabel"
+           text="Nenhum arquivo selecionado"
+           wrapText="true"
+           style="-fx-font-size: 10px; -fx-text-fill: #444;"
+           maxWidth="350" />
+
+    <HBox spacing="20" alignment="CENTER">
+        <Button text="Salvar Evento"
+                onAction="#handleSaveEvent"
+                prefWidth="120"
+                style="-fx-font-size: 14px;" />
+        <Button text="Cancelar"
+                onAction="#handleCancel"
+                prefWidth="120"
+                style="-fx-font-size: 14px; -fx-background-color: #ccc;" />
+    </HBox>
 
 </VBox>
