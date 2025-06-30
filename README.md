@@ -62,3 +62,33 @@ Este é um sistema desktop desenvolvido em **Java + JavaFX** para gerenciamento 
 - IDE de sua preferência (IntelliJ, Eclipse, VSCode) ou terminal para executar o JAR
 
 ---
+
+### Passos
+
+1. Clone o projeto e entre na pasta:  
+`git clone https://github.com/seu-usuario/sistema_eventos.git`  
+`cd sistema_eventos`
+
+2. Compile o código, substituindo `CAMINHO_DO_JAVAFX_LIB` pelo caminho da pasta `lib` do JavaFX SDK no seu computador:  
+`javac --module-path "CAMINHO_DO_JAVAFX_LIB" --add-modules javafx.controls,javafx.fxml *.java`
+
+3. Crie um arquivo chamado `manifest.txt` com o seguinte conteúdo (deixe uma linha em branco no final):  
+`Main-Class: Main`
+
+4. Gere o arquivo JAR executável:  
+`jar cfm sistema_eventos-main.jar manifest.txt *.class *.fxml`
+
+5. Execute a aplicação substituindo `CAMINHO_DO_JAVAFX_LIB` pelo caminho do JavaFX SDK e `CAMINHO_DO_DRIVER_MYSQL` pelo caminho do driver MySQL Connector/J no seu computador:  
+`java --module-path "CAMINHO_DO_JAVAFX_LIB" --add-modules javafx.controls,javafx.fxml -cp sistema_eventos-main.jar;"CAMINHO_DO_DRIVER_MYSQL" Main`
+
+---
+
+
+Se preferir, execute o arquivo `run.bat` presente na pasta do projeto para rodar a aplicação com um clique.
+
+---
+
+### Observações
+
+- Certifique-se que o banco de dados MySQL está rodando e as credenciais no código estão configuradas corretamente.  
+- O JavaFX SDK deve estar corretamente instalado e seu caminho configurado na execução.
