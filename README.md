@@ -55,16 +55,10 @@ Este é um sistema desktop desenvolvido em **Java + JavaFX** para gerenciamento 
 
 ### Pré-requisitos
 
-- Java JDK 17 ou superior
-- IDE de sua preferência (IntelliJ, Eclipse ou VSCode)
-- Banco de dados SQLite ou MySQL
-- JavaFX configurado no projeto
+- Java JDK 17 ou superior instalado
+- JavaFX SDK (exemplo: [https://gluonhq.com/products/javafx/](https://gluonhq.com/products/javafx/))
+- Driver MySQL Connector/J (exemplo: `mysql-connector-j-9.3.0.jar`)
+- Banco de dados MySQL local configurado e em execução
+- IDE de sua preferência (IntelliJ, Eclipse, VSCode) ou terminal para executar o JAR
 
-### Passos
-
-```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/sistema_eventos.git
-cd sistema_eventos
-
-# Abra o projeto na sua IDE e execute a classe Main.java
+---
