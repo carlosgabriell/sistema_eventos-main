@@ -34,7 +34,7 @@ public class Event1 {
     public String getBannerPath() { return bannerPath; }
     public String getCategory() { return category; }
 
-    
+    // Setters (se necessário)
     public void setBannerPath(String bannerPath) { this.bannerPath = bannerPath; }
     public void setCategory(String category) { this.category = category; }
 }
