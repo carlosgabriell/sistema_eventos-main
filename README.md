@@ -3,7 +3,7 @@
 ![Java](https://img.shields.io/badge/Java-17-blue?style=flat-square)
 ![JavaFX](https://img.shields.io/badge/JavaFX-17-green?style=flat-square)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-orange?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=flat-square)
+![Status](https://img.shields.io/badge/Status-%20Finalizado-green?style=flat-square)
 
 ---
 
